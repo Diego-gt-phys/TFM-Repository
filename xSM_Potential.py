@@ -33,6 +33,7 @@ class xSM(generic_potential.generic_potential):
         self.g  = 0.6483   # SU(2)
         self.gp = 0.3587   # U(1)_Y
         self.yt = 0.9946   # top Yukawa
+        self.yb = 0.0243   # bottom Yukawa
 
         # CosmoTransitions bookkeeping
         self.Ndim = 2          # 2D field space: (h, s)
@@ -90,9 +91,9 @@ class xSM(generic_potential.generic_potential):
         # the full list here and handles the ring improvement via findApproxTransitions
         if T > 0:
             # Scalar thermal masses (leading order Daisy)
-            PiH = (3*self.lH + self.lHS/2 + self.g**2*(3/16 + 1/16)
-                   + self.yt**2/4) * T**2 / 3.0   # rough Higgs Debye
-            PiS = (self.lS + self.lHS/6) * T**2   # singlet Debye
+            PiH = T**2/48 * (9*self.g**2 + 3*self.gp**2 + 24*self.lH
+                 + 2*self.lHS + 12*self.yt**2 + 12*self.yb**2)
+            PiS = T**2/12 * (2*self.lHS + 3*self.lS)
             # Add to diagonal (approximate — full matrix would mix again)
             Mhh_T = Mhh + PiH
             Mss_T = Mss + PiS
@@ -130,124 +131,7 @@ class xSM(generic_potential.generic_potential):
         X = np.asarray(X)
         h = X[..., 0]
         mtsq = self.yt**2 / 2.0 * h**2
-        mtsq = np.stack([mtsq], axis=-1)   # shape (..., 1)
-        return mtsq, np.array([12])
+        mbsq = self.yb**2 / 2.0 * h**2
+        masses = np.stack([mtsq, mbsq], axis=-1)
+        return masses, np.array([12, 12])
     
-# ---- Quick test ----
-"""
-import matplotlib.pyplot as plt
-
-# Benchmark point (not physical yet, just to test)
-model = xSM(lH=0.13, muH=88.4, lHS=0.3, muHS=10.0,
-            lS=0.5,  mu3=30.0, muS=50.0)
-
-# Evaluate V0 along the h axis with s=0
-h_vals = np.linspace(0, 300, 500)
-s_vals = np.zeros_like(h_vals)
-X = np.column_stack([h_vals, s_vals])
-
-V_vals = model.V0(X)
-
-plt.figure()
-plt.plot(h_vals, V_vals)
-plt.xlabel("h (GeV)")
-plt.ylabel("V0 (GeV⁴)")
-plt.title("Tree-level potential along h axis (s=0)")
-plt.axhline(0, color='k', linewidth=0.5)
-plt.show()
-"""
-# ---- Phase tracing ----
-model = xSM(lH=0.13, muH=88.4, lHS=0.25, muHS=5.0,
-            lS=0.3,  mu3=20.0, muS=60.0)
-
-model.findAllTransitions()
-
-# ---- Extract T_c and xi_c ----
-for i, trans in enumerate(model.TnTrans):
-    Tc = trans['Tnuc']
-    high_vev = trans['high_vev']
-    low_vev  = trans['low_vev']
-    
-    # xi_c = |delta phi_h| / T_c
-    delta_h = abs(low_vev[0] - high_vev[0])
-    xi_c = delta_h / Tc
-    
-    print(f"Transition {i}:")
-    print(f"  T_c     = {Tc:.2f} GeV")
-    print(f"  high phase vev = {high_vev}")
-    print(f"  low  phase vev = {low_vev}")
-    print(f"  Δφ_h    = {delta_h:.2f} GeV")
-    print(f"  ξ_c     = {xi_c:.4f}")
-    print()
-    
-import matplotlib.pyplot as plt
-
-trans = model.TnTrans[1]
-Tc    = trans['Tnuc']
-high  = trans['high_vev']
-low   = trans['low_vev']
-xi_c  = abs(low[0] - high[0]) / Tc
-
-# --- Plot the potential at T=Tc along the tunneling path ---
-T_vals  = np.linspace(80, 160, 200)
-h_high  = []
-h_low   = []
-
-for T in T_vals:
-    phases = model.calcTcTrans()
-    break  # just need the vevs at each T — use phase tracer instead
-
-# Plot the two minima as function of T
-fig, ax = plt.subplots(figsize=(8, 6))
-
-# Grid in (h, s)
-h_vals = np.linspace(-220, 220, 300)
-s_vals = np.linspace(-220, 220, 300)
-H, S   = np.meshgrid(h_vals, s_vals)
-X_grid = np.column_stack([H.ravel(), S.ravel()])
-V_grid = model.Vtot(X_grid, Tc).reshape(H.shape)
-
-# Clip for better contrast
-V_plot = np.clip(V_grid, np.percentile(V_grid, 2), np.percentile(V_grid, 95))
-
-cp = ax.contourf(H, S, V_plot, levels=60, cmap='RdBu_r')
-ax.contour(H, S, V_plot, levels=20, colors='k', linewidths=0.3, alpha=0.4)
-plt.colorbar(cp, ax=ax, label=r'$V_{\rm eff}$ (GeV$^4$)')
-
-# Mark the two minima
-from scipy.optimize import minimize
-
-def Vtot_scalar(X, T):
-    return model.Vtot(np.array([X]), T)[0]
-
-# Polish the minima at T_c
-res_high = minimize(Vtot_scalar, high, args=(Tc,), method='Nelder-Mead',
-                    options={'xatol':1e-6, 'fatol':1e-6})
-res_low  = minimize(Vtot_scalar, low,  args=(Tc,), method='Nelder-Mead',
-                    options={'xatol':1e-6, 'fatol':1e-6})
-
-high_min = res_high.x
-low_min  = res_low.x
-
-ax.plot(high_min[0], high_min[1], 'r*', markersize=15,
-        label=f'High phase (φ_h={high_min[0]:.1f}, φ_s={high_min[1]:.1f})', zorder=5)
-ax.plot(low_min[0],  low_min[1],  'b*', markersize=15,
-        label=f'Low phase (φ_h={low_min[0]:.1f}, φ_s={low_min[1]:.1f})',  zorder=5)
-
-# Update xi_c with polished values
-xi_c = abs(low_min[0] - high_min[0]) / Tc
-ax.text(0.02, 0.05, rf'$\xi_c = {xi_c:.3f}$', transform=ax.transAxes,
-        fontsize=13, color='black',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
-ax.set_xlabel(r'$\varphi_h$ (GeV)', fontsize=13)
-ax.set_ylabel(r'$\varphi_s$ (GeV)', fontsize=13)
-ax.set_title(rf'$V_{{\rm eff}}(\varphi_h, \varphi_s)$ at $T_c = {Tc:.1f}$ GeV', fontsize=14)
-ax.legend(fontsize=11)
-ax.text(0.02, 0.05, rf'$\xi_c = {xi_c:.3f}$', transform=ax.transAxes,
-        fontsize=13, color='black',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
-plt.tight_layout()
-plt.savefig("EWPT_result.png", dpi=150)
-plt.show()
