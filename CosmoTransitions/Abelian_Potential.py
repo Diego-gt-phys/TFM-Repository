@@ -92,12 +92,4 @@ class Abelian_Model(generic_potential.generic_potential):
 
         return masses, dofs
     
-    def boundingBox(self, X):
-        """
-        Sets bounds on the field space exploration.
-        By bounding phi to be strictly greater than 0, we prevent CosmoTransitions
-        from tracking the redundant symmetric mirror vacuum at -phi.
-        """
-        # X is the field array. We force the 0-th field index (phi) 
-        # to stay between 0.0 and a safe upper limit past the VEV.
-        return [(0.0, 400.0)]
+    
