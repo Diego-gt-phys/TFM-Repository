@@ -4,7 +4,7 @@ Abelian Higgs Model for CosmoTransitions.
 
 Created on Fri May 22 14:38:44 2026
 
-@author: Usuario
+@author: Diego garcía Tejada
 """
 
 import numpy as np
