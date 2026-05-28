@@ -157,6 +157,7 @@ class Abelian_Model(generic_potential.generic_potential):
         
         return masses, dofs
         
+"""
 m = Abelian_Model(lam=0.13, mu=88.4, g=0.35)
 
 v    = m.mu / np.sqrt(m.lam)
@@ -177,3 +178,4 @@ d2Veff = (m.Vtot(np.array([[v + eps]]), 0.) - 2*m.Vtot(np.array([[v]]), 0.)
           + m.Vtot(np.array([[v - eps]]), 0.)) / eps**2
 print(f"Vtot'(v)  = {dVeff.item():.2e}  (should be ~0)")
 print(f"Vtot''(v) = {d2Veff.item():.4f} vs tree-level mh^2 = {2*m.mu**2:.4f}")
+"""
