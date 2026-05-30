@@ -7,10 +7,6 @@ Created on Tue May 26 17:55:26 2026
 @author: Diego García Tejada
 """
 
-"""
-Abelian Higgs Model for CosmoTransitions — OS-scheme counterterms.
-"""
-
 import numpy as np
 from cosmoTransitions import generic_potential
 
@@ -87,6 +83,7 @@ class Abelian_Model(generic_potential.generic_potential):
     # ------------------------------------------------------------------ #
     #  Phase-tracker helpers                                               #
     # ------------------------------------------------------------------ #
+    
     def forbidPhaseCrit(self, X):
            return (np.array([X])[..., 0] < -5.0).any()
     
@@ -96,7 +93,7 @@ class Abelian_Model(generic_potential.generic_potential):
     
     def approxFiniteTMin(self):
         return [np.array([0.0])]
-        
+    
     # ------------------------------------------------------------------ #
     #  Tree-level potential                                               #
     # ------------------------------------------------------------------ #
