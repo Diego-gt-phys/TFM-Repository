@@ -2,7 +2,7 @@
 """
 xSM - Real Singlet Extension of the Standard Model (no Z_2 symmetry)
 ======================================================================
-Author : Diego Garcia Tejada
+Author : Diego García Tejada
 Created: May 2026
 
 Lagrangian parametrization
