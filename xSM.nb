@@ -3953,8 +3953,8 @@ _H+M_{\\text{hh}}+M_{\\text{ss}}+\\Pi _S\\right)\
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{718.5, 735},
-WindowMargins->{{Automatic, -1445.25}, {Automatic, 0}},
+WindowSize->{718.5, 729.75},
+WindowMargins->{{Automatic, -1440}, {Automatic, 0}},
 Magnification:>0.9 Inherited,
 FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
 StyleDefinitions->"Default.nb",
