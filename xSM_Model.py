@@ -1,56 +1,10 @@
 # -*- coding: utf-8 -*-
 """
+Created on Fri Jun 12 09:54:50 2026
+
 xSM - Real Singlet Extension of the Standard Model (no Z_2 symmetry)
-======================================================================
-Author : Diego García Tejada
-Created: May 2026
 
-Lagrangian parametrization
----------------------------
-Free inputs : lH, lHS, muHS, lS, mu3   (quartic and cubic couplings)
-              v, u                       (EW and singlet vevs)
-              mt, mb, mW, mZ            (SM inputs, PDG 2025 defaults)
-
-Derived     : muH2, muS2  from tadpole conditions at (v, u)
-                muH2 = lH*v^2 + lHS/2*u^2 + muHS*u
-                muS2 = lHS/2*v^2 + muHS*v^2/(2u) + lS*u^2 - mu3*u
-
-SM limit    : u=0, lHS=0, muHS=0, lS=free, mu3=0
-              lH = mh^2 / (2 v^2),  singlet decouples completely.
-
-Tree-level potential
---------------------
-V0 = lH/4 * h^4  - muH2/2 * h^2
-   + lHS/4 * h^2*s^2  + muHS/2 * h^2*s
-   + lS/4 * s^4  - mu3/3 * s^3  - muS2/2 * s^2
-
-OS counterterms (2D)
----------------------
-Ansatz (mirrors full Lagrangian monomial structure):
-  dV = A*h^2 + B*s^2 + C*h^4 + D*s^4 + E*h^2*s + F*s^3
-
-6 conditions imposed at (v, u):
-  [I]   dV_eff/dh   = 0         h-tadpole
-  [II]  dV_eff/ds   = 0         s-tadpole
-  [III] d^2V_eff/dh^2 = M_hh    h-mass
-  [IV]  d^2V_eff/ds^2 = M_ss    s-mass
-  [V]   d^2V_eff/dhds = M_hs    off-diagonal mass
-  [VI]  d^3V_eff/ds^3 = V0'''   s-cubic (pins delta mu3)
-
-Analytic solution (Cramer's rule on three decoupled subsystems):
-  E  = -V_hs / (2v)
-  A  = (-3*V_h  + V_hh*v  + 2*V_hs*u) / (4v)
-  C  = ( V_h  - V_hh*v) / (8v^3)
-  B  = (3*V_hs*v - 6*V_s + u*(4*V_ss - V_sss*u)) / (4u)
-  D  = (V_hs*v - 2*V_s + 2*V_ss*u - V_sss*u^2) / (8u^3)
-  F  = (-V_hs*v/2 + V_s - V_ss*u + V_sss*u^2/3) / u^2
-
-where V_h, V_hh, ... are derivatives of V_CW evaluated at (v, u).
-
-Daisy resummation
------------------
-Arnold-Espinosa scheme. Thermal Debye masses added directly to the
-entries in boson_massSq; parent class Vtot handles the rest.
+@author: Diego García Tejada
 """
 
 import numpy as np
