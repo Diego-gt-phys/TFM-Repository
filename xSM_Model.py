@@ -409,12 +409,12 @@ if __name__ == "__main__":
     print("\n" + "="*56)
     print("  TEST 2: xSM benchmark  (u=40 GeV, Z2-breaking)")
     print("="*56)
-    bsm = xSM(lH   = 0.13376,
+    bsm = xSM(lH   = 0.1292702392878693,
               lHS  = 0.25,
-              muHS = -24.6,
-              lS   = 0.5,
-              mu3  = -480.4,
+              muHS = -12.00961599328108,
+              lS   = 0.125,
+              mu3  = 86.09073543497686,
               v    = 246.22,
-              u    = 40.0)
+              u    = 50.0)
     bsm.check_vacuum()
     bsm.print_params()
