@@ -7686,7 +7686,7 @@ Cell[BoxData[
   3.9908844277793655`*^9},
  CellLabel->"Out[31]=",ExpressionUUID->"3598eb5d-14bc-454c-8d89-a0807759ad34"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -7939,8 +7939,8 @@ Cell[BoxData[
  CellChangeTimes->{3.9910459337582073`*^9, 3.99104596447888*^9},
  CellLabel->"Out[9]=",ExpressionUUID->"93d128bc-cd71-094f-a739-a659c97f78be"]
 }, Open  ]]
-}, Open  ]]
-}, Open  ]]
+}, Closed]]
+}, Closed]]
 }, Open  ]]
 },
 WindowSize->{574.8, 573.6},
@@ -8139,7 +8139,7 @@ Cell[227944, 5650, 95903, 1603, 239, "Output",ExpressionUUID->"e46bdb9b-96a6-dc4
 }, Closed]],
 Cell[CellGroupData[{
 Cell[323896, 7259, 160, 3, 53, "Chapter",ExpressionUUID->"1e0790a0-9715-2440-b140-59f1b82bc8c4"],
-Cell[324059, 7264, 1133, 35, 43, "Input",ExpressionUUID->"9823f5db-8432-4244-a017-37765ef0e8c0"],
+Cell[324059, 7264, 1133, 35, 77, "Input",ExpressionUUID->"9823f5db-8432-4244-a017-37765ef0e8c0"],
 Cell[CellGroupData[{
 Cell[325217, 7303, 172, 3, 59, "Section",ExpressionUUID->"fd8d76a2-ac15-1140-b450-fa49e27aa11d"],
 Cell[CellGroupData[{
@@ -8163,9 +8163,9 @@ Cell[CellGroupData[{
 Cell[335265, 7630, 677, 17, 25, "Input",ExpressionUUID->"089dfbbc-ab54-0d4c-af24-b57342b6862e"],
 Cell[335945, 7649, 1276, 37, 51, "Output",ExpressionUUID->"3598eb5d-14bc-454c-8d89-a0807759ad34"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 Cell[CellGroupData[{
-Cell[337270, 7692, 158, 3, 59, "Section",ExpressionUUID->"4a6a9c8d-0c82-4649-9786-516a811e9e96"],
+Cell[337270, 7692, 158, 3, 47, "Section",ExpressionUUID->"4a6a9c8d-0c82-4649-9786-516a811e9e96"],
 Cell[CellGroupData[{
 Cell[337453, 7699, 222, 4, 25, "Input",ExpressionUUID->"9db7c712-ba94-2547-8fbe-8829dddba5c2"],
 Cell[337678, 7705, 501, 15, 46, "Output",ExpressionUUID->"bf5f5957-77d5-6248-a8e4-e2b55ebee60f"]
@@ -8190,8 +8190,8 @@ Cell[CellGroupData[{
 Cell[344087, 7919, 353, 9, 25, "Input",ExpressionUUID->"056874dc-e818-2341-acb2-8f8ac86c73cf"],
 Cell[344443, 7930, 388, 9, 30, "Output",ExpressionUUID->"93d128bc-cd71-094f-a739-a659c97f78be"]
 }, Open  ]]
-}, Open  ]]
-}, Open  ]]
+}, Closed]]
+}, Closed]]
 }, Open  ]]
 }
 ]
